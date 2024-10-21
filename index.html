@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizacion Grafica de Datos / A8_VMSG</title>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            drawRezagoEducativo(),
+                drawCarenciaSalud(),
+                drawEntidadesPobres(),
+                drawComparativaR_U(),
+                drawEdadPobreza()
+        }
+        function drawRezagoEducativo() {
+            var data = google.visualization.arrayToDataTable([
+                ['Año', 'Porcentaje'],
+                ['2008', 21.9],
+                ['2010', 20.9],
+                ['2012', 19.9],
+                ['2014', 18.9],
+                ['2016', 17.9],
+                ['2018', 16.9]
+            ]);
+
+            var options = {
+                title: 'Rezago Educativo (2008-2018)',
+                titleTextStyle: { color: '#ccc' },
+                backgroundColor: 'transparent',
+                hAxis: {
+                    title: 'Año',
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                vAxis: {
+                    minValue: 0,
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                isStacked: true
+            };
+
+            var chart = new google.visualization.SteppedAreaChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+
+        //////////////////
+
+        function drawCarenciaSalud() {
+            var data = google.visualization.arrayToDataTable([
+                ["Año", "Porcentaje", { role: "style" }],
+                ["2018", 16.2, "#5916DB"],
+                ["2016", 20.64, "#DA16DB"],
+                ["2014", 25.08, "#9A16DB"],
+                ["2012", 29.52, "#1816DB"],
+                ["2010", 33.96, "#DB1667"],
+                ["2008", 38.4, "color: #1680DB"]
+            ]);
+
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1,
+                {
+                    calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"
+                },
+                2]);
+
+            var options = {
+                title: "Carencia por Acceso a los Servicios de Salud (2008-2018)",
+                width: 600,
+                height: 400,
+                bar: { groupWidth: "95%" },
+                backgroundColor: 'transparent',
+                hAxis: {
+                    title: 'Porcentaje%',
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                vAxis: {
+                    minValue: 0,
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                titleTextStyle: { color: '#ccc' },
+                legend: { position: "none" },
+            };
+            var chart = new google.visualization.BarChart(document.getElementById("Carencias_Salud"));
+            chart.draw(view, options);
+        }
+
+        //////////////////
+
+        function drawEntidadesPobres() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Año', 'Chiapas', 'Guerrero', 'Oaxaca', 'Veracruz' ],
+                ['2008', 77.0, 68.4, 61.8, 51.2],
+                ['2010', 76.88, 68.02, 62.72, 53.32],
+                ['2012', 76.76, 67.64, 63.64, 55.44],
+                ['2014', 76.64, 67.26, 64.56, 57.56],
+                ['2016', 76.52, 66.88, 65.48, 59.68],
+                ['2018', 76.4, 66.5, 66.4, 61.8],
+            ]);
+            var options = {
+                title: 'Entidades con Mayor Poblacion en Situacion de Pobreza (2008-2018)',
+                titleTextStyle: { color: '#ccc' },
+                hAxis: {
+                    title: 'Año',
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                vAxis: {
+                    minValue: 0,
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                legend: { textStyle: { color: '#ccc' } },
+                backgroundColor: 'transparent'
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('EntidadesPobres'));
+            chart.draw(data, options);
+        }
+
+        //////////////
+
+        function drawComparativaR_U() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Zona', 'Porcentaje'],
+                ['Zona Rural', 55.3],
+                ['Zona Urbana', 37.6]
+            ]);
+
+            var options = {
+                backgroundColor: 'transparent',
+                titleTextStyle: { color: '#ccc' },
+                hAxis: {
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                vAxis: {
+                    minValue: 0,
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                title: 'Comparativa de Pobreza en Zonas Rurales y Urbanas (2008-2018)'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('ComparativaR_U'));
+
+            chart.draw(data, options);
+        }
+
+
+
+        //////////////
+
+        function drawEdadPobreza() {
+            var data = google.visualization.arrayToDataTable([
+                ['Año', '<18', '12-29', '>65'],
+                ['2008', 53.3, 43.0, 44.9],
+                ['2010', 52.56, 42.88, 44.14],
+                ['2012', 51.82, 42.76, 43.38],
+                ['2014', 51.08, 42.64, 42.62],
+                ['2016', 50.34, 42.52, 41.86],
+                ['2018', 49.6, 42.4, 41.1]
+            ]);
+            var options = {
+                title: 'Pobreza en relacion con los diferentes grupos de edad (2008-2018)',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: {
+                    title: 'Porcentaje%',
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                vAxis: {
+                    minValue: 0,
+                    titleTextStyle: { color: '#ccc' },
+                    textStyle: { color: '#ccc' }
+                },
+                titleTextStyle: { color: '#ccc' },
+                textStyle: { color: '#ccc' },
+                legend: { textStyle: { color: '#ccc' } },
+                backgroundColor: 'transparent'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('EdadPobreza'));
+
+            chart.draw(data, options);
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+    <h1>10 AÑOS DE MEDICIÓN DE POBREZA EN MÉXICO, AVANCES Y RETOS EN POLÍTICA SOCIAL</h1>
+    <section id="Graficos">
+        <div class="grafico">
+            <div id="chart_div" style="width: 500px; height: 500px;"></div>
+            <p>En este gráfico de areas escalonadas se muestra la disminución del rezago educativo en porcentaje. Iniciando alrededor del 21.9% en 2008 y disminuye progresivamente hasta 16.9% para el 2018. Cada año muestra una ligera reducción, lo que indica una mejora constante en el acceso y finalización de la educación en ese periodo.</p>
+        </div>
+        <div class="grafico">
+            <div id="Carencias_Salud" style="width: 700px; height: 400px;"></div>
+            <p>Como se puede observar en el gráfico de barras horizontales se observa una reducción en el porcentaje de personas con carencia de acceso a los servicios de salud en la última década. En 2008, el porcentaje era de 38.4% y se redujo gradualmente hasta 16.2% en 2018. Las barras intermedias muestran el avance en periodos de 2 años, como 33.96% en 2010, 29.52% en 2012, 25.08% en 2014 y 20.64% en 2016 lo cual muestra un buen avance sobre indicadores sociales.</p>
+        </div>
+        <div class="grafico">
+            <div id="EntidadesPobres" style="width: 500px; height: 500px;"></div>
+            <p>El siguiente grafico de área muestra a las entidades con mayor índice de pobreza enfocado en Chiapas, Guerrero, Oaxaca y Veracruz. Estos estados han sido de los más afectados por la pobreza en México, debido a una combinación de varios factores sociales, económicos y geográficos. Como se muestra en la grafica Chiapas era el estado con mayor población en situación de pobreza a pesar de los esfuerzos, la reducción fue mínima (0.6 puntos porcentuales), mientras que Veracruz muestra el aumento más significativo, con un incremento de 10.6 puntos porcentuales, siendo guerrero el único estado que tuvo la mejor reducción de los cuatro, aun así, con una reducción mínima.</p>
+        </div>
+        <div class="grafico">
+            <div id="ComparativaR_U" style="width: 700px; height: 500px;"></div>
+            <p>En el siguiente grafico circular muestra la distribución de la población en situación de pobreza según el lugar de residencia, dividiendo a la población entre zona rural y zona urbana. Más de la mitad de la población que vive en zonas rurales está en situación de pobreza a diferencia de las zonas urbanas, donde la pobreza es considerablemente más baja en comparación con las zonas rurales, pero sigue afectando a una parte significativa de la población.</p>
+        </div>
+        <div class="grafico">
+            <div id="EdadPobreza" style="width: 700px; height: 500px"></div>
+            <p>Se muestra el porcentaje de población en situación de pobreza según los rangos de edad: menores de 18 años (<18), personas de 12 a 29 años (12-29) y personas mayores de 65 años (>65) en un lapso de 2008 a 2018. Los menores de 18 años es el grupo más afectado por la pobreza, con más del 50% en situación de pobreza en 2018. Aunque ha habido una disminución en los porcentajes, es claro que la pobreza infantil sigue siendo un problema grave. Mientras que las personas de 12 a 29 años tienen una tasa de pobreza relativamente alta, y ha mostrado muy poca mejora en la última década, por último, personas mayores de 65 años, aunque la pobreza en este grupo ha disminuido más que en los otros dos, aún hay una taza considerable de adultos mayores viven en situación de pobreza.</p>
+        </div>
+    </section>
+
+    <style>
+        body {
+            background-color: rgb(25, 25, 31);
+        }
+
+        h1 {
+            font-family: sans-serif;
+            text-align: center;
+            width: 700px;
+            margin: auto;
+            margin-bottom: 100px;
+            color: #ccc;
+        }
+p{
+    width: 80%;
+    text-align: justify;
+    margin: auto;
+    color: #ccc;
+    font-family: sans-serif;
+}
+        #Graficos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grafico {
+            justify-items: center;
+        }
+    </style>
+
+</body>
+
+</html>
